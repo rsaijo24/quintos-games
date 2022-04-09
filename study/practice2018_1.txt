@@ -1,0 +1,181 @@
+public boolean simulate() {
+	int current = 0;
+	for (int i = 1; i <= numHops; i++) {
+		current += hopDistance();
+		if (current < 0) {
+			return false;
+		}
+		else if (current >= goalDistance) {
+			return true;
+		}
+	}
+	return false;
+}
+
+public double runSimulations(int num) {
+	int success = 0;
+	for (int i = 0; i < num; i++) {
+		if (simulate()) {
+			success++;
+		}
+	}
+	return success * 1.0 / num;
+}
+
+public WordPairList(String [] words) {
+	for (int i = 0; i < words.length; i++) {
+		for (int j = i + 1; j < words.length; j++) {
+			WordPair twoWords = new WordPair(words[i], words[j]);
+			allPairs.add(twoWords);
+		}
+	}
+}
+
+public int numMatches() {
+	int matches = 0;
+	for (int i = 0; i < allPairs.size(); i++) {
+		WordPair wp = allPairs.get(i);
+
+		if (wp.getFirst().equals(wp.getSecond())) {
+			matches++;
+		}
+	}
+	return matches;
+}
+
+public class CodeWordChecker {
+	private int minimum;
+	private int maximum;
+	private String notOccur;
+
+	public CodeWordChecker(int min, int max, String not) {
+		minimum = min;
+		maximum = max;
+		notOccur = not;
+	}
+
+	public CodeWordChecker(String not) {
+		minimum = 6;
+		maximum = 20;
+		notOccur = not;
+	}
+
+	public boolean isValid(String str) {
+		
+		if (str.length < minimum || str.length > maximum) {
+			return false;
+		}
+
+		int howLong = notOccur.length;
+		for (int i = 0; i < str.length - howLong; i++) {
+			if (str.substring(i, i + howLong).equals(notOccur)) {
+				return false;
+			}
+		}
+		return true;
+	}
+}
+
+public static int[] getColumn(int[][] arr2D, int c) {
+	int[] column = new int[arr2D.length];
+	for (int r = 0; r < arr2D.length; r++) {
+		column[r] = arr2D[r][c];
+	}
+	return column;
+}
+
+public static boolean isLatin(int[][] square) {
+	if (containsDuplicates(square[0])) {
+		return false;
+	}
+	for (int row = 0; row < square.length; row++) {
+		if (!hasAllValues(square[0], square[row])) {
+			return false;
+		}
+	}
+	for (int col = 0; col < square[0].length; col++) {
+		if (!hasAllValues(square[0], getColumn(square, col))) {
+			return false;
+		}
+	}
+	return true;
+}
+
+public Digits(int num) {
+	int divisor = 1;
+	while (num > 0) {
+		divisor *= 10;
+		int remainder = num % divisor;
+		int digit = remainder / (divisor / 10);
+		digitList.add(0, digit);
+		num -= remainder;
+	}
+}
+
+12345, 12340, 12300, 12000
+3 4 5
+
+
+public class MultPractice implements StudyPractice {
+	private int firstInteger;
+	private int secondInteger;
+
+	public MultPractice(int first, int second) {
+		firstInteger = first;
+		secondInteger = second;
+	}
+
+	public String getProblem() {
+		return first + " TIMES " + second;
+	}
+
+	public void nextProblem() {
+		secondInteger++;
+	}
+}
+
+public void replaceNthOccurrence(String str, int n, String repl) {
+	int index = findNthOccurrence(str, n);
+	if (index == -1) {
+		return;
+	}
+	currentPhrase = currentPhrase.substring(0, index) + repl + currentPhrase.substring(index + str.length(), currentPhrase.length());
+}
+
+public int findLastOccurrence(String str) {
+	int last = 0;
+	for (int i = 1; last != -1; i++) {
+		last = findNthOccurrence(str, i);
+	}
+	return last;
+}
+
+public static Position findPosition(int num, int[][] intArr) {
+	for (int r = 0; r < intArr.length; r++) {
+		for (int c = 0; c < intArr[0].legnth; c++) {
+			if (intArr[r][c] == num) {
+				Position pos = new Position(r, c);
+	      return pos;
+			}
+		}
+	}
+	return null;
+}
+
+public static Position[][] getSuccessorArray(int[][] intArr) {
+	Position[][] successorArray = new Position[intArr.length][intArr[0].length];
+	for (int r = 0; r < intArr.length; r++) {
+		for (int c = 0; c < intArr[0].legnth; c++) {
+			for (int row = 0; row < intArr.length; row++) {
+				for (int col = 0; col < intArr[0].legnth; col++) {
+					if (intArr[row][col] == intArr[r][c] + 1) {
+						Position pos = new Position[row][col];
+						successorArray[r][c] = pos;
+					}
+				}
+			}
+			successorArray[r][c] = null;
+		}
+	}
+	return successorArray;
+}

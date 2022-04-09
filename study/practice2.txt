@@ -1,0 +1,72 @@
+public ArrayList<String> getDelimitersList(String[] tokens) {
+	ArrayList<String> delimiters = new ArrayList<String>;
+	for (int i = 0; i < tokens.length; i++) {
+		if (tokens[i].equals(openDel) || tokens[i].equals(closeDel)) {
+			delimiters.add(tokens[i]);
+		}
+	}
+	return delimiters;
+}
+
+public boolean isBalanced(ArrayList<String> delimiters) {
+	int closeCounter = 0;
+	int openCounter = 0;
+	for (int i = 0; i < delimiters.size(); i++) {
+		if (delimiters.get(i).equals(closeDel)) {
+			closeCounter++;
+		}
+		else if (delimiters.get(i).equals(openDel)) {
+			openCounter++;
+		}
+		if (closeCounter > openCounter) {
+			return false;
+		}
+	}
+	if (closeCounter == openCounter) {
+		return true;
+	}
+	return false;
+}
+
+public LightBoard(int numRows, int numCols) {
+	lights = new boolean[numRows][numCols];
+	for (int r = 0; r < numRows; r++) {
+		for (int c = 0; c < numCols; c++) {
+			if (Math.random() < 0.4) {
+				lights[r][c] = true;
+			}
+		}
+	}
+}
+
+public boolean evaluateLight(int row, int col) {
+
+	if (lights[row][col] == true) {
+		int onCounter = 0;
+		for (int r = 0; r < lights.length; r++) {
+			if (lights[r][col] == true) {
+				onCounter++;
+			}
+		}
+		if (onCounter++ % 2 == 0) {
+			return false;
+		}
+		else {
+			return true;
+		}
+	}
+	else {
+		int onCounter2 = 0;
+		for (int r = 0; r < lights.length; r++) {
+			if (lights[r][col] == true) {
+				onCounter2++;
+			}
+		}
+		if (onCounter2 % 3 == 0) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+}
